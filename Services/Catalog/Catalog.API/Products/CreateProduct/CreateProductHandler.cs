@@ -1,11 +1,12 @@
 ﻿using Catalog.API.Models;
 using ClassLib.CQRS;
+using Marten;
 
 namespace Catalog.API.Products.CreateProduct
 {
     public record CreateProductCommand(Guid Id, string Name, string Description, List<string> Category, string ImageFile, decimal Price) : ICommand<CreateProductResponse>;
     public record CreateProductResult(Guid Id);
-    public class CreateProductHandler : ICommandHandler<CreateProductCommand, CreateProductResponse>
+    internal class CreateProductHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResponse>
     {
         public async Task<CreateProductResponse> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
@@ -17,6 +18,9 @@ namespace Catalog.API.Products.CreateProduct
                 ImageFile = command.ImageFile,
                 Price = command.Price,
             };
+
+            session.Store(product);
+            await session.SaveChangesAsync(cancellationToken);
 
             return new CreateProductResponse(Guid.NewGuid());
         }
