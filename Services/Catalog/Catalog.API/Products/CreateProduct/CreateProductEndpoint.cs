@@ -1,4 +1,5 @@
 ﻿using ClassLib.CQRS;
+using System.Text.Json;
 
 
 namespace Catalog.API.Products.CreateProduct
@@ -17,7 +18,7 @@ namespace Catalog.API.Products.CreateProduct
 
                 var response = result.Adapt<CreateProductResponse>();
 
-                Results.Created($"/products/{response.Id}", response);
+                return Results.Created($"/products/{response.Id}", response);
             })
             .WithName("CreateProduct")
             .Produces<CreateProductResponse>(StatusCodes.Status201Created)
