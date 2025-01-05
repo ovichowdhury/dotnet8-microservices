@@ -22,7 +22,7 @@ namespace Catalog.API.Products.CreateProduct
             session.Store(product);
             await session.SaveChangesAsync(cancellationToken);
 
-            return new CreateProductResponse(Guid.NewGuid());
+            return new CreateProductResponse(product.Id);
         }
     }
 }

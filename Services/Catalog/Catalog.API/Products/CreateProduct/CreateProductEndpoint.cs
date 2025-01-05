@@ -1,5 +1,4 @@
 ﻿using ClassLib.CQRS;
-using System.Text.Json;
 
 
 namespace Catalog.API.Products.CreateProduct
