@@ -1,4 +1,5 @@
 ﻿using Catalog.API.Models;
+using Catalog.API.Products.CreateProduct;
 
 namespace Catalog.API.Products.GetProducts
 {
@@ -14,7 +15,12 @@ namespace Catalog.API.Products.GetProducts
                 var response = result.Adapt<GetProductsResponse>();
 
                 return Results.Ok(response);
-            });
+            })
+            .WithName("GetProducts")
+            .Produces<CreateProductResponse>(StatusCodes.Status200OK)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithSummary("Get All Products")
+            .WithDescription("Get All Products");
         }
     }
 }
