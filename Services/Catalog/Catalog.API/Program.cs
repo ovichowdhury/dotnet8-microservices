@@ -1,14 +1,19 @@
-
+using ClassLib.Behaviors;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services in DI
-builder.Services.AddCarter();
+var assembly = typeof(Program).Assembly;
 
 builder.Services.AddMediatR(config =>
 {
-    config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    config.RegisterServicesFromAssembly(assembly);
+    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
+
+builder.Services.AddValidatorsFromAssembly(assembly);
+
+builder.Services.AddCarter();
 
 builder.Services.AddMarten(options =>
 {

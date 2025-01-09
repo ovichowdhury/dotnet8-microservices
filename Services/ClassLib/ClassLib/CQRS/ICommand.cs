@@ -6,7 +6,7 @@ namespace ClassLib.CQRS
     {
 
     }
-    public interface ICommand<out TRequest> : IRequest<TRequest>
+    public interface ICommand<out TResponse> : IRequest<TResponse>
     {
 
     }
