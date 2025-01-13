@@ -1,6 +1,8 @@
 ﻿using ClassLib.CQRS;
 using FluentValidation;
 using MediatR;
+using System.Diagnostics;
+using System.Text.Json;
 
 namespace ClassLib.Behaviors
 {
@@ -22,8 +24,10 @@ namespace ClassLib.Behaviors
                 .SelectMany(r => r.Errors)
                 .ToList();
 
+            Debug.WriteLine(JsonSerializer.Serialize(failures));
+
             if (failures.Any())
-                throw new ValidationException(failures);
+                throw new ValidationException(failures[0].ErrorMessage);
 
 
             return await next();

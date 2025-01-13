@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+
 namespace Catalog.API.Products.UpdateProduct;
 
 public record UpdateProductRequest(Guid Id, string Name, List<string> Category, string Description, string ImageFile, decimal Price);
@@ -12,6 +14,8 @@ public class UpdateProductEndpoint : ICarterModule
             async (UpdateProductRequest request, ISender sender) =>
             {
                 var command = request.Adapt<UpdateProductCommand>();
+
+                Debug.WriteLine("Price: " + command.Price.ToString());
 
                 var result = await sender.Send(command);
 
