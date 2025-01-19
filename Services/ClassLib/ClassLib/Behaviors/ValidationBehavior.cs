@@ -27,7 +27,7 @@ namespace ClassLib.Behaviors
             Debug.WriteLine(JsonSerializer.Serialize(failures));
 
             if (failures.Any())
-                throw new ValidationException(failures[0].ErrorMessage);
+                throw new ValidationException(failures);
 
 
             return await next();
