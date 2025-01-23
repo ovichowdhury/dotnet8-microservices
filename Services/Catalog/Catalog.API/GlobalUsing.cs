@@ -5,3 +5,4 @@ global using Marten;
 global using FluentValidation;
 global using ClassLib.Behaviors;
 global using ClassLib.Exceptions.Handler;
+global using Catalog.API.Data;
