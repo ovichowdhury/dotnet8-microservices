@@ -6,3 +6,5 @@ global using FluentValidation;
 global using ClassLib.Behaviors;
 global using ClassLib.Exceptions.Handler;
 global using Catalog.API.Data;
+global using HealthChecks.UI.Client;
+global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
