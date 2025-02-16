@@ -5,3 +5,5 @@ global using MediatR;
 global using Mapster;
 global using ClassLib.Behaviors;
 global using FluentValidation;
+global using ClassLib.Exceptions;
+global using Marten;
