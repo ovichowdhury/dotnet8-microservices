@@ -1,5 +1,3 @@
-using Basket.API.Data;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services in DI
@@ -31,10 +29,16 @@ builder.Services.AddMarten(options =>
 // register repository
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
+// register exception handler
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 // Configure HTTP Request Pipeline 
 app.MapCarter();
+
+// Use Exception Handler
+app.UseExceptionHandler(options => { });
 
 app.MapGet("/", () => "Hello World!");
 
