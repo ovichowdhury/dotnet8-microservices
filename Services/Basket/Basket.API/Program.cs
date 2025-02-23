@@ -1,3 +1,5 @@
+using Basket.API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services in DI
@@ -25,6 +27,9 @@ builder.Services.AddMarten(options =>
     options.Schema.For<ShoppingCart>().Identity(x => x.UserName);
 
 }).UseLightweightSessions();
+
+// register repository
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 var app = builder.Build();
 
