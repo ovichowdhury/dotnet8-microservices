@@ -29,8 +29,16 @@ builder.Services.AddMarten(options =>
 // register repository
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
 // register exception handler
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 
 var app = builder.Build();
 
