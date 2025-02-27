@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Http.Json;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services in DI
@@ -38,6 +41,12 @@ builder.Services.AddStackExchangeRedisCache(options =>
 
 // register exception handler
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+// Configure JSON Serialization Options
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
 
 
 var app = builder.Build();
