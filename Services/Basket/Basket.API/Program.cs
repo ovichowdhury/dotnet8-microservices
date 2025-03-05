@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Http.Json;
-using System.Text.Json;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +47,11 @@ builder.Services.Configure<JsonOptions>(options =>
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
 });
 
+// Add health check
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
+
 
 var app = builder.Build();
 
@@ -57,6 +61,10 @@ app.MapCarter();
 // Use Exception Handler
 app.UseExceptionHandler(options => { });
 
-app.MapGet("/", () => "Hello World!");
+// Use Health Check
+app.UseHealthChecks("/health", new HealthCheckOptions()
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();
