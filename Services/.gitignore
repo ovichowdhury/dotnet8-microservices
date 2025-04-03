@@ -1,0 +1,80 @@
+# Ignore build outputs
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+logs/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Rider
+.idea/
+
+# ASP.NET Core secrets
+**/secrets.json
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Publish outputs
+wwwroot/
+dist/
+
+# Database files
+*.mdf
+*.ldf
+*.ndf
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# Environment variables
+.env
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+*.testresults
+
+# Resharper
+_ReSharper.Caches/
+
+# NCrunch
+.ncrunchsolution
+*.ncrunchproject
+*.ncrunch
+
+# Azure Functions
+local.settings.json
+
+# JetBrains Rider
+.idea/
+*.iml
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+packages/
+
+# Libman
+libman.json
+
+# Temporary files
+~$*
+*.tmp

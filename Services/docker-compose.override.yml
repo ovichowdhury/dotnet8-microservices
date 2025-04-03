@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   catalogdb:
@@ -9,10 +9,10 @@ services:
       - POSTGRES_DB=CatalogDb
     restart: always
     ports:
-        - "5433:5432"
+      - "5433:5432"
     volumes:
-      - postgres_catalog:/var/lib/postgresql/data/ 
- 
+      - postgres_catalog:/var/lib/postgresql/data/
+
   basketdb:
     container_name: basketdb
     environment:
@@ -21,44 +21,48 @@ services:
       - POSTGRES_DB=BasketDb
     restart: always
     ports:
-        - "5434:5432"
+      - "5434:5432"
     volumes:
       - postgres_basket:/var/lib/postgresql/data/
-  
+
   cachedb:
     container_name: cachedb
     restart: always
     ports:
-        - "6379:6379" 
+      - "6379:6379"
 
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=1234
       - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=1234;Include Error Detail=true
     depends_on:
-        - catalogdb
+      - catalogdb
     ports:
-      - "5000:8080"
+      - "5050:8080"
       - "6050:8081"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${USER_SECRETS_PATH}:/home/app/.microsoft/usersecrets:ro
+      - ${HTTPS_CERTS_PATH}:/home/app/.aspnet/https
 
   basket.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=1234
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=1234;Include Error Detail=true
       - ConnectionStrings__Redis=cachedb:6379
     depends_on:
       - basketdb
       - cachedb
     ports:
-      - "5001:8080"
+      - "5051:8080"
       - "6051:8081"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${USER_SECRETS_PATH}:/home/app/.microsoft/usersecrets:ro
+      - ${HTTPS_CERTS_PATH}:/home/app/.aspnet/https
