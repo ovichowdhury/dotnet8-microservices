@@ -1,4 +1,4 @@
-
+using Discount.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,9 +33,16 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
+// Register Redis
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
+// Register Grpc
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountGrpc"]!);
 });
 
 // register exception handler
