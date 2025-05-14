@@ -1,8 +1,12 @@
 using Discount.Grpc.Data;
 using Discount.Grpc.Services;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Mapster global configuration
+TypeAdapterConfig.GlobalSettings.Default.IgnoreNullValues(true);
 
 // Add services to the container.
 builder.Services.AddGrpc();

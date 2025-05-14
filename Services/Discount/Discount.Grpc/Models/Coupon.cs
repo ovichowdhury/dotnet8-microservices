@@ -6,4 +6,5 @@ public class Coupon
     public string ProductName { get; set; } = default!;
     public string Description { get; set; } = default!;
     public int Amount { get; set; }
+    public DateOnly? CreatedDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
 }
