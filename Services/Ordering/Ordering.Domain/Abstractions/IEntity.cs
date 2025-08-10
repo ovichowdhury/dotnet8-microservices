@@ -1,7 +1,4 @@
-﻿
-using System.Threading.Tasks;
-
-namespace Ordering.Domain.Abstractions;
+﻿namespace Ordering.Domain.Abstractions;
 
 public interface IEntity
 {
